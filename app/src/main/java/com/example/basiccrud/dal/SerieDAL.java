@@ -48,15 +48,78 @@ public class SerieDAL {
 
         if(consulta.moveToFirst()) {
             do {
+                int id = consulta.getInt(0);
+                String nombre = consulta.getString(1);
+                String categoria = consulta.getString(2);
+                int capitulos = consulta.getInt(3);
+
+                Serie serie = new Serie(id,nombre,categoria,capitulos);
+                lista.add(serie);
+                /*
+                // forma B
+                Serie serie = new Serie();
+                serie.setId(id);
+                serie.setNombre(nombre);*/
 
             } while(consulta.moveToNext());
-            
+
         }
 
         // EJ: Where con parámetros
         // Cursor consulta = db.rawQuery("SELECT * FROM serie WHERE categoria = ?", new String[]{ String.valueOf("Sci-fi") });
 
-        return null; // temporal
+        return lista;
+    }
+
+
+    public boolean actualizar(int id, Serie serie)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues c = new ContentValues(); // Objeto tipo clave-valor
+        c.put("nombre", serie.getNombre());
+        c.put("categoria", serie.getCategoria());
+        c.put("capitulos", serie.getCapitulos());
+        try {
+            int filasAfectadas;
+            filasAfectadas = db.update(
+                    "serie",
+                    c,
+                    "id = ?",
+                    new String[] { String.valueOf(id) }
+                    );
+            // if(filasAfectadas > 0) return true; else return false;
+            return (filasAfectadas > 0);
+        } catch (Exception e) {
+
+        }
+
+        return false;
+    }
+
+    public boolean actualizar(Serie serie)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues c = new ContentValues(); // Objeto tipo clave-valor
+        c.put("nombre", serie.getNombre());
+        c.put("categoria", serie.getCategoria());
+        c.put("capitulos", serie.getCapitulos());
+        try {
+            int filasAfectadas;
+            filasAfectadas = db.update(
+                    "serie",
+                    c,
+                    "id = ?",
+                    new String[] { String.valueOf(serie.getId()) }
+            );
+            // if(filasAfectadas > 0) return true; else return false;
+            return (filasAfectadas > 0);
+        } catch (Exception e) {
+
+        }
+
+        return false;
     }
 
     public boolean eliminar(int id) {
