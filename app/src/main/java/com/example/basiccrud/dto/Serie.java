@@ -54,6 +54,11 @@ public class Serie {
         this.capitulos = capitulos;
     }
 
+    @Override
+    public String toString()
+    {
+        return (this.getNombre() + " || " + this.getCategoria() + " (" + getCapitulos() + " capitulos)");
+    }
 
 
 }
