@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -71,12 +72,22 @@ public class MainActivity extends AppCompatActivity {
 
         final AlertDialog dialog = builder.create();
 
+        // Tap presionado por un tiempo
         listSeries.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicion, long l) {
                 codPosicion = posicion;
                 dialog.show();
                 return true;
+            }
+        });
+
+        // Tap simple
+        listSeries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int posicion, long l) {
+                codPosicion = posicion;
+                abrirEditarSerieActivity();
             }
         });
 /*
@@ -107,6 +118,14 @@ public class MainActivity extends AppCompatActivity {
 
         }*/
 
+    }
+
+    private void abrirEditarSerieActivity() {
+        Intent intento = new Intent(MainActivity.this, EditarSerieActivity.class);
+        Serie s = (Serie) listaSeries.get(codPosicion);
+
+        intento.putExtra("serie", s);
+        startActivityForResult(intento, 100);
     }
 
     private void actualizarLista() {

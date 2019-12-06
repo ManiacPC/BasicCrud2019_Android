@@ -166,4 +166,9 @@ public class SerieDAL {
 
         return true;
     }
+
+    public Serie getSerie()
+    {
+        return this.serie;
+    }
 }

@@ -1,6 +1,8 @@
 package com.example.basiccrud.dto;
 
-public class Serie {
+import java.io.Serializable;
+
+public class Serie implements Serializable {
     private int id;
     private String nombre;
     private String categoria;
